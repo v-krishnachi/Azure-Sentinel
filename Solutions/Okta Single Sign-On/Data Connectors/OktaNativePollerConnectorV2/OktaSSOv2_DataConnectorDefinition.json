@@ -66,7 +66,7 @@
             },
             "instructionSteps": [
                 {
-                    "description": "To enable the Okta Single Sign-On for Microsoft Sentinel, provide the required information below and click on Connect.\n>",
+                    "description": "To enable the Okta Single Sign-On for Microsoft Sentinel, provide the required information below and click on Connect.\n> Rate-limit handling checks every response with an 85% remaining-quota threshold, using the X-Rate-Limit-Limit, X-Rate-Limit-Remaining, and X-Rate-Limit-Reset response headers. The reset value is interpreted as Unix seconds for retry timing; Retry-After is not required when the reset header is present.",
                     "instructions": [
                         {
                             "type": "DataConnectorsGrid",

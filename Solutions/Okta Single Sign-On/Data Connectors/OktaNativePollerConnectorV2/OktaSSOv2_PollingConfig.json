@@ -48,10 +48,28 @@
                 },
                 "rateLimitConfig": {
                     "evaluation": {
-                        "checkMode": "OnlyWhen429"
+                        "checkMode": "AlwaysCheck",
+                        "stopCondition": {
+                            "type": "PercentageRemaining",
+                            "value": 85
+                        }
                     },
                     "extraction": {
-                        "source": "DefaultHeaders"
+                        "source": "CustomHeaders",
+                        "headers": {
+                            "limit": {
+                                "name": "X-Rate-Limit-Limit",
+                                "format": "Integer"
+                            },
+                            "remaining": {
+                                "name": "X-Rate-Limit-Remaining",
+                                "format": "Integer"
+                            },
+                            "reset": {
+                                "name": "X-Rate-Limit-Reset",
+                                "format": "UnixTimeSeconds"
+                            }
+                        }
                     },
                     "retryStrategy": {
                         "useResetOrRetryAfterHeaders": true

@@ -1807,7 +1807,7 @@
                     },
                     "instructionSteps": [
                       {
-                        "description": "To enable the Okta Single Sign-On for Microsoft Sentinel, provide the required information below and click on Connect.\n>",
+                        "description": "To enable the Okta Single Sign-On for Microsoft Sentinel, provide the required information below and click on Connect.\n> Rate-limit handling checks every response with an 85% remaining-quota threshold, using the X-Rate-Limit-Limit, X-Rate-Limit-Remaining, and X-Rate-Limit-Reset response headers. The reset value is interpreted as Unix seconds for retry timing; Retry-After is not required when the reset header is present.",
                         "instructions": [
                           {
                             "type": "DataConnectorsGrid",
@@ -2442,7 +2442,7 @@
             },
             "instructionSteps": [
               {
-                "description": "To enable the Okta Single Sign-On for Microsoft Sentinel, provide the required information below and click on Connect.\n>",
+                "description": "To enable the Okta Single Sign-On for Microsoft Sentinel, provide the required information below and click on Connect.\n> Rate-limit handling checks every response with an 85% remaining-quota threshold, using the X-Rate-Limit-Limit, X-Rate-Limit-Remaining, and X-Rate-Limit-Reset response headers. The reset value is interpreted as Unix seconds for retry timing; Retry-After is not required when the reset header is present.",
                 "instructions": [
                   {
                     "type": "DataConnectorsGrid",
@@ -2655,10 +2655,28 @@
                     },
                     "rateLimitConfig": {
                       "evaluation": {
-                        "checkMode": "OnlyWhen429"
+                        "checkMode": "AlwaysCheck",
+                        "stopCondition": {
+                          "type": "PercentageRemaining",
+                          "value": 85
+                        }
                       },
                       "extraction": {
-                        "source": "DefaultHeaders"
+                        "source": "CustomHeaders",
+                        "headers": {
+                          "limit": {
+                            "name": "X-Rate-Limit-Limit",
+                            "format": "Integer"
+                          },
+                          "remaining": {
+                            "name": "X-Rate-Limit-Remaining",
+                            "format": "Integer"
+                          },
+                          "reset": {
+                            "name": "X-Rate-Limit-Reset",
+                            "format": "UnixTimeSeconds"
+                          }
+                        }
                       },
                       "retryStrategy": {
                         "useResetOrRetryAfterHeaders": true
